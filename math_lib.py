@@ -20,17 +20,19 @@ def mean(d):
     return np.array(avgs)
 
 def covariance(array1, array2):
-    D = np.stack((array1, array2), axis=1)
-    m_array = mean(D)
-
-    num = 0
-    den = 0
+    d = np.stack((array1, array2), axis=1)
+    m_array = find_mean(d)
+    rows, cols = d.shape
     
-    for row in D:
-        den += 1
-        num += (row[0] - m_array[0])*(row[1] - m_array[1])
 
-    cov = num / den
+    numer = 0
+    denom = 0
+    
+    for i in d:
+        numer += (i[0] - m_array[0])*(i[1] - m_array[1])
+        demon += 1
+
+    cov = numer / denom
 
     return cov
 
