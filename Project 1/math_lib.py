@@ -41,13 +41,19 @@ def find_correlation(array1, array2):
     D = np.stack((array1, array2) , axis=1)
     m_array = find_mean(D)
 
-    std1 = 0
-    std2 = 0
-
+    num = 0
+    denx = 0
+    deny = 0
+    
     for row in D:
-        std1 += (row[0] - m_array[0]) ** 2
-
-
+        num += (row[0] - m_array[0])*(row[1] - m_array[1])
+        denx += (row[0] - m_array[0]) ** 2
+        denx += (row[1] - m_array[1]) ** 2
+    den = math.sqrt(denx * deny)
+    cor = num / den
+    
+    return cor
+        
 def range_normalization(d):
     num_rows, num_cols = d.shape
     norm_d = np.empty(d.shape)
