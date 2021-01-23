@@ -15,7 +15,7 @@ def find_mean(d):
     
     for i in range(cols):
         for j in range(rows):
-            means += D[i, j]
+            means += d[i, j]
         
         output[i] = means / rows
         means = 0
@@ -74,8 +74,15 @@ def standard_normalization(d):
             norm_d[i,j] = (d[i,j]-mean)/std
     return norm_d
 
+def covariance_matrix(d):
+    num_rows, num_cols = d.shape
+    matrix = np.empty((num_cols, num_cols))
+    for j in range(num_cols):
+        for i in range(num_cols):
+            matrix[i,j] = find_covariance(d[:,i],d[:,j])
+
+    return matrix
 def label_encode(d):
-    print(d.shape)
     num_rows, num_cols = d.shape
     norm_d = np.empty(d.shape).astype(int)
     for j in range(num_cols):
@@ -89,5 +96,5 @@ def label_encode(d):
                 norm_d[i,j] = n
                 n += 1
     return norm_d
-    
+print(covariance_matrix(num))    
 
