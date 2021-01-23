@@ -15,9 +15,9 @@ def find_mean(d):
     
     for i in range(cols):
         for j in range(rows):
-            mean += D[i, j]
-        means = means / rows
-        output[i] = means
+            means += D[i, j]
+        
+        output[i] = means / rows
         means = 0
         
     return output
