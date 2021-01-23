@@ -8,20 +8,19 @@ num = np.array([[1,2,3,4],[2,3,4,2], [3, 4, 5, 1]])
 cat = np.array([["A","mon"],["B","tues"], ["C", "tues"]])
 ############
 
-def find_mean(2D_array):
-    col1 = 0
-    col2 = 0
-    counter = 0
+def find_mean(d):
+    rows, cols = d.shape
+    output = np.empty(cols)
+    means = 0
     
-    for row in 2D_array:
-        counter +=1
-        col1 += row[0]
-        col2 += row[1]
-
-    col1 = col1 / counter
-    col2 = col2 / counter
-
-    return np.array([col1, col2])
+    for i in range(cols):
+        for j in range(rows):
+            mean += D[i, j]
+        means = means / rows
+        output[i] = means
+        means = 0
+        
+    return output
 
 def find_covariance(array1, array2):
     D = np.stack((array1, array2), axis=1)
