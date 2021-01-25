@@ -4,27 +4,27 @@ import numpy as np
 import math
 
 ### TEMP ###
-num = np.array([[1,2,3,4],[2,3,4,2], [3, 4, 5, 1]])
-cat = np.array([["A","mon"],["B","tues"], ["C", "tues"]])
+nums = np.array([[1,2,3,4],[2,3,4,2], [3, 4, 5, 1]])
+cats = np.array([["A","mon"],["B","tues"], ["C", "tues"]])
 ############
 
-def find_mean(d):
+def mean(d):
     rows, cols = d.shape
     output = np.empty(cols)
-    means = 0
     
-    for i in range(cols):
-        for j in range(rows):
-            means += d[i, j]
+    for j in range(cols):
+        mean = 0
+        for i in range(rows):
+            mean += d[i, j]
         
-        output[i] = means / rows
-        means = 0
+        output[j] = mean / rows
+        
         
     return output
 
-def find_covariance(array1, array2):
+def covariance(array1, array2):
     D = np.stack((array1, array2), axis=1)
-    m_array = find_mean(D)
+    m_array = mean(D)
 
     num = 0
     den = 0
@@ -37,9 +37,9 @@ def find_covariance(array1, array2):
 
     return cov
 
-def find_correlation(array1, array2):
+def correlation(array1, array2):
     D = np.stack((array1, array2) , axis=1)
-    m_array = find_mean(D)
+    m_array = mean(D)
 
     num = 0
     denx = 0
@@ -75,7 +75,7 @@ def standard_normalization(d):
     norm_d = np.empty(d.shape)
     for j in range(num_cols):
         std = np.std(d[:,j])
-        mean = np.mean(d[:,j])
+        mean = np.mean(np.transpose(d[:,j]))
         for i in range(num_rows):
             norm_d[i,j] = (d[i,j]-mean)/std
     return norm_d
@@ -85,7 +85,7 @@ def covariance_matrix(d):
     matrix = np.empty((num_cols, num_cols))
     for j in range(num_cols):
         for i in range(num_cols):
-            matrix[i,j] = find_covariance(d[:,i],d[:,j])
+            matrix[i,j] = covariance(d[:,i],d[:,j])
 
     return matrix
 def label_encode(d):
@@ -102,5 +102,4 @@ def label_encode(d):
                 norm_d[i,j] = n
                 n += 1
     return norm_d
-print(covariance_matrix(num))    
 
