@@ -1,1 +1,13 @@
 riley and alex
+
+The data we found is used as an approach to predict forest fires using meteorological data, specifically
+in the northeast region of Portugal. The data was uploaded to the UCI Machine Learning repository by 
+Paulo Cortez and Aníbal Morais of the University of Minho Department of Information Systems in Portugal.
+Within our data set we have 13 attribute and 517 instances. Of the 13 attributes two of them are 
+catagorical, month and day, and the remaining 11 are numerical. We will be using Label Encoding because
+we believe the extra 19 attributes that will be added from One Hot encoding will only muddle our data.
+There are no missing values in this data set. This data set is very interesting to both Alex and I
+because of the devistating effects wildfires have had in recent years not only in the United states,
+but abroad as well. Of the 13 attributes listed we believe rain, wind, temp, ISI, and FFMC will
+be the most descriptive attributes for this data set. All of the important attributes have in some way
+a relationship with the area attribute which is essentially what this data seeks to predict.
