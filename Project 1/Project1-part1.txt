@@ -1,4 +1,4 @@
-riley and alex
+Riley Slater and Alex Alvarez
 
 The data we found is used as an approach to predict forest fires using meteorological data, specifically
 in the northeast region of Portugal. The data was uploaded to the UCI Machine Learning repository by 
