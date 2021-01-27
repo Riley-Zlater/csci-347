@@ -88,6 +88,22 @@ def covariance_matrix(d):
             matrix[i,j] = covariance(d[:,i],d[:,j])
 
     return matrix
+
+def variance(d):
+    num_rows, num_cols = d.shape
+    means = mean(d)
+    byAttribute = np.empty(num_cols)
+    total = 0
+    for j in range(num_cols):
+        dist = 0
+        for i in range(num_rows):
+            c = d[i,j]-means[j]
+            c = c*c
+            dist += c
+        byAttribute[j] = dist
+        total += dist
+
+    return (byAttribute, total)
 def label_encode(d):
     num_rows, num_cols = d.shape
     norm_d = np.empty(d.shape).astype(int)
