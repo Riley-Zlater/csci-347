@@ -48,7 +48,7 @@ def correlation(array1, array2):
     for row in D:
         num += (row[0] - m_array[0])*(row[1] - m_array[1])
         denx += (row[0] - m_array[0]) ** 2
-        denx += (row[1] - m_array[1]) ** 2
+        deny += (row[1] - m_array[1]) ** 2
     den = math.sqrt(denx * deny)
     cor = num / den
     

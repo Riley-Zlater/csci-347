@@ -1,6 +1,7 @@
 import numpy as np
 import pandas as pd
 import math_lib as ml
+import matplotlib.pyplot as plt
 import csv
 
 #import csv
@@ -31,6 +32,12 @@ print("Multivariate mean: ", pd.DataFrame(ml.mean(data)))
 print("Covariance matrix:\n", pd.DataFrame(ml.covariance_matrix(data)))
 
 ##TODO: scatter plots of 5 pairs of attributes (any 5 pairs we think will be connected)
+fig, ax = plt.subplots()
+ax.scatter(x=data[:,4], y=data[:,7])
+ax.set_xlabel('FFMC(Fine Fuel Moisture Code)')
+ax.set_ylabel('ISI (Initial Spread Index)')
+ax.set_title('FFMC vs ISI')
+plt.show()
 
 range_norm_data = ml.range_normalization(data)
 print("Range-normalized covariance matrix:\n", pd.DataFrame(ml.covariance_matrix(range_norm_data)))
