@@ -56,6 +56,7 @@ plt.ylabel('Temperature (Celsius)')
 plt.title('Relative Humidity vs Temperature')
 plt.show()
 
+#this isnt how label encoded actually works, I have no idea what the number-to-category is
 plt.scatter(x=data[:,2], y=data[:,11])
 plt.xlabel('Month (Label Encoded Jan. = 0, Mar. = 1, etc...)')
 plt.ylabel('Rain (mm/m2)')
