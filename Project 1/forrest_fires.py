@@ -13,6 +13,7 @@ formattedData = pd.DataFrame(data);
 print("Raw data: (with attribute names)\n", formattedData)
 
 #remove attribute names
+att_names = data[0,:]
 data = data[1:,:]
 
 #label encode
@@ -23,13 +24,13 @@ data = data.astype(float)
 
 #format and print
 formattedData = pd.DataFrame(data);
-print("Label encoded data:\n", formattedData)
+print("\nLabel encoded data:\n", formattedData)
 
 ### NO MISSING DATA. FILL NOT REQUIRED ###
 
-print("Multivariate mean: ", pd.DataFrame(ml.mean(data)))
+print("\nMultivariate mean: ", pd.DataFrame(ml.mean(data)))
 
-print("Covariance matrix:\n", pd.DataFrame(ml.covariance_matrix(data)))
+print("\nCovariance matrix:\n", pd.DataFrame(ml.covariance_matrix(data)))
 
 plt.figure(1)
 plt.scatter(x=data[:,4], y=data[:,7])
@@ -55,8 +56,12 @@ plt.xlabel('Relative Humidity (%)')
 plt.ylabel('Temperature (Celsius)')
 plt.title('Relative Humidity vs Temperature')
 
+<<<<<<< HEAD
 # This one kinda sucks TODO
 plt.figure(5)
+=======
+#this isnt how label encoded actually works, I have no idea what the number-to-category is
+>>>>>>> bc29818f99150fa066c5d2441af1550bde3bfa43
 plt.scatter(x=data[:,2], y=data[:,11])
 plt.xlabel('Month')
 plt.ylabel('Rain (mm/m2)')
@@ -64,7 +69,7 @@ plt.title('Month vs Rain')
 plt.show()
 
 range_norm_data = ml.range_normalization(data)
-print("Range-normalized covariance matrix:\n", pd.DataFrame(ml.covariance_matrix(range_norm_data)))
+print("\nRange-normalized covariance matrix:\n", pd.DataFrame(ml.covariance_matrix(range_norm_data)))
 
 ##TODO: search for greatest sample covariance, make scatterplot between attributes
 
@@ -89,10 +94,26 @@ for j in range(num_cols):
         if (cov < 0):
             neg_cov += 1
 
-print("# of attribute pairs: ", n);
+print("\n# of attribute pairs: ", n);
 print("# of attribute pairs with correlation greater than .5: ", greater_corr)
 print("# of attribute pairs with negative covariance: ", neg_cov)
 
-##TODO: find total variance of the data
+#use this because otherwise the numbers are very big
+print("\nUSING RANGE-NORMALIZED DATA:")
 
-##TODO: find total variance restricted to 5 attributes with greatest sample variance
+#find variance of total data set
+varByAttribute, totalVar = ml.variance(range_norm_data)
+
+print("Variance by attribute:\n", pd.DataFrame(varByAttribute))
+print("Total variance of the data: ", totalVar)
+
+#find variance of only 5 largest variance attributes
+range_norm_short = np.stack((
+    range_norm_data[:,0],
+    range_norm_data[:,3],
+    range_norm_data[:,5],
+    range_norm_data[:,6],
+    range_norm_data[:,10]), axis=1)
+
+varByAttribute, totalVar = ml.variance(range_norm_short)
+print("Total variance of the 5 attributes with largest variance: ", totalVar)
