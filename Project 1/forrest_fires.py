@@ -64,11 +64,24 @@ plt.title('FFMC vs DC')
 plt.show()
 
 range_norm_data = ml.range_normalization(data)
-print("\nRange-normalized covariance matrix:\n", pd.DataFrame(ml.covariance_matrix(range_norm_data)))
+range_norm_cov_mat = ml.covariance_matrix(range_norm_data);
+print("\nRange-normalized covariance matrix:\n", pd.DataFrame(range_norm_cov_mat))
 
-##TODO: search for greatest sample covariance, make scatterplot between attributes
+num_rows, num_cols = range_norm_cov_mat.shape
+greatest_cov = 0
+for j in range(num_cols):
+    for i in range(j+1,num_cols):
+        if range_norm_cov_mat[i,j] > greatest_cov:
+            att1 = i
+            att2 = j
+            greatest_cov = range_norm_cov_mat[i,j]
+
+print("\nAttributes with greatest covariance: ", att_names[att1], ", ", att_names[att2])
+print("Greatest covariance: ", greatest_cov)
 
 std_norm_data = ml.standard_normalization(data)
+
+        
 
 ##TODO: find std normalized attribute pair with greatest correlation + scatter plot
 
