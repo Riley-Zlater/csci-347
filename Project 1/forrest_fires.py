@@ -87,21 +87,16 @@ std_norm_data = ml.standard_normalization(data)
 
 ##TODO: find std normalized attribute pair with smallest correlation + scatter plot
 
-#find attribute pairs with specific correlation / covariance
-num_rows, num_cols = data.shape
-n = 0
-greater_corr = 0
+#find std-normalized attribute pairs with specific correlation
+
+num_rows, num_cols = std_norm_data.shape
+
 greatest_corr = 0
 smallest_corr = 1000000
-neg_cov = 0
 for j in range(num_cols):
     for i in range(j+1,num_cols):
-        n += 1
-        corr = ml.correlation(data[:,i],data[:,j])
-        cov = ml.covariance(data[:,i], data[:,j])
-        #find number of pairs with correlation greater than .5
-        if (corr > 0.5):
-            greater_corr += 1
+        corr = ml.correlation(std_norm_data[:,i],std_norm_data[:,j])
+        cov = ml.covariance(std_norm_data[:,i], std_norm_data[:,j])
         #find pair with greatest correlation
         if (corr > greatest_corr):
             greatest_corr_att1 = i
@@ -112,14 +107,30 @@ for j in range(num_cols):
             smallest_corr_att1 = i
             smallest_corr_att2 = j
             smallest_corr = corr
+
+print("Standard normalized attribute pair with greatest correlation: ", att_names[greatest_corr_att1], ",", att_names[greatest_corr_att2])
+print("Greatest correlation: ", greatest_corr, "\n")
+print("Standard normalized attribute pair with smallest correlation: ", att_names[smallest_corr_att1], ",", att_names[smallest_corr_att2])
+print("Smallest correlation: ", smallest_corr, "\n")
+
+#find attribute pairs with specific correlation / covariance
+num_rows, num_cols = data.shape
+n = 0
+greater_corr = 0
+neg_cov = 0
+for j in range(num_cols):
+    for i in range(j+1,num_cols):
+        n += 1
+        corr = ml.correlation(data[:,i],data[:,j])
+        cov = ml.covariance(data[:,i], data[:,j])
+        #find number of pairs with correlation greater than .5
+        if (corr > 0.5):
+            greater_corr += 1
+        
         #find number of pairs with negative covariance
         if (cov < 0):
             neg_cov += 1
-
-print("Attribute pair with greatest correlation: ", att_names[greatest_corr_att1], ",", att_names[greatest_corr_att2])
-print("Greatest correlation: ", greatest_corr, "\n")
-print("Attribute pair with smallest correlation: ", att_names[smallest_corr_att1], ",", att_names[smallest_corr_att2])
-print("Smallest correlation: ", smallest_corr, "\n")
+            
 print("\n# of attribute pairs: ", n);
 print("# of attribute pairs with correlation greater than .5: ", greater_corr)
 print("# of attribute pairs with negative covariance: ", neg_cov)

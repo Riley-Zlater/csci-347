@@ -47,7 +47,7 @@ def correlation(array1, array2):
         num += (row[0] - m_array[0])*(row[1] - m_array[1])
         denx += (row[0] - m_array[0]) ** 2
         deny += (row[1] - m_array[1]) ** 2
-    den = math.sqrt(denx * deny)
+    den = math.sqrt(denx)*math.sqrt(deny)
     cor = num / den
     
     return cor
@@ -86,7 +86,6 @@ def covariance_matrix(d):
             matrix[i,j] = covariance(d[:,i],d[:,j])
 
     return matrix
-
 
 def variance(d):
     num_rows, num_cols = d.shape
