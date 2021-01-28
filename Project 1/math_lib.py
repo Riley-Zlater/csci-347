@@ -16,9 +16,7 @@ def mean(d):
         mean = 0
         for i in range(rows):
             mean += d[i, j]
-        
         output[j] = mean / rows
-        
         
     return output
 

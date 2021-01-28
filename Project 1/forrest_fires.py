@@ -56,14 +56,11 @@ plt.xlabel('Relative Humidity (%)')
 plt.ylabel('Temperature (Celsius)')
 plt.title('Relative Humidity vs Temperature')
 
-
-# This one kinda sucks TODO
-#this isnt how label encoded actually works, I have no idea what the number-to-category is
 plt.figure(5)
-plt.scatter(x=data[:,2], y=data[:,11])
-plt.xlabel('Month')
-plt.ylabel('Rain (mm/m2)')
-plt.title('Month vs Rain')
+plt.scatter(x=data[:,5], y=data[:,6])
+plt.xlabel('FFMC (Fine Fuel Moisture Code)')
+plt.ylabel('DC (Drought Code)')
+plt.title('FFMC vs DC')
 plt.show()
 
 range_norm_data = ml.range_normalization(data)
