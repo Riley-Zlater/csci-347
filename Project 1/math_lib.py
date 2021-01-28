@@ -47,7 +47,7 @@ def correlation(array1, array2):
         num += (row[0] - m_array[0])*(row[1] - m_array[1])
         denx += (row[0] - m_array[0]) ** 2
         deny += (row[1] - m_array[1]) ** 2
-    den = math.sqrt(denx) * math.sqrt(deny)
+    den = math.sqrt(denx * deny)
     cor = num / den
     
     return cor
@@ -71,11 +71,11 @@ def range_normalization(d):
 def standard_normalization(d):
     num_rows, num_cols = d.shape
     norm_d = np.empty(d.shape)
+    means = mean(d)
     for j in range(num_cols):
         std = np.std(d[:,j])
-        mean = np.mean(np.transpose(d[:,j]))
         for i in range(num_rows):
-            norm_d[i,j] = (d[i,j]-mean)/std
+            norm_d[i,j] = (d[i,j]-means[j])/std
     return norm_d
 
 def covariance_matrix(d):
