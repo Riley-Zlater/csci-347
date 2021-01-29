@@ -1,3 +1,5 @@
+# Written by Alexander Alvarez and Riley Slater
+
 import numpy as np
 import pandas as pd
 import math_lib as ml
@@ -32,6 +34,7 @@ print("\nMultivariate mean: ", pd.DataFrame(ml.mean(data)))
 
 print("\nCovariance matrix:\n", pd.DataFrame(ml.covariance_matrix(data)))
 
+#five scatter plots of pairs of attributes
 plt.figure(1)
 plt.scatter(x=data[:,4], y=data[:,7])
 plt.xlabel('FFMC (Fine Fuel Moisture Code)')
@@ -79,6 +82,7 @@ for j in range(num_cols):
 print("\nAttribute pair with greatest covariance: ", att_names[att1], ",", att_names[att2])
 print("Greatest covariance: ", greatest_cov, "\n")
 
+#scatter plot of the attributes with the greatest covariance
 plt.figure(6)
 plt.scatter(x=data[:,6], y=data[:,5])
 plt.xlabel('DC (Drought Code)')
@@ -112,6 +116,7 @@ for j in range(num_cols):
 print("Standard normalized attribute pair with greatest correlation: ", att_names[greatest_corr_att1], ",", att_names[greatest_corr_att2])
 print("Greatest correlation: ", greatest_corr, "\n")
 
+#scatter plot of the attributwes with the greatest correlation
 plt.figure(7)
 plt.scatter(x=data[:,6], y=data[:,5])
 plt.xlabel('DC (Drought Code)')
@@ -122,6 +127,7 @@ plt.show()
 print("Attribute pair with smallest correlation: ", att_names[smallest_corr_att1], ",", att_names[smallest_corr_att2])
 print("Smallest correlation: ", smallest_corr, "\n")
 
+#scatter plot of the attributes with the smallest correlation
 plt.figure(8)
 plt.scatter(x=data[:,9], y=data[:,8])
 plt.xlabel('Relative Humidity (%)')
