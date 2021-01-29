@@ -57,7 +57,7 @@ plt.ylabel('Temperature (Celsius)')
 plt.title('Relative Humidity vs Temperature')
 
 plt.figure(5)
-plt.scatter(x=data[:,5], y=data[:,6])
+plt.scatter(x=data[:,4], y=data[:,6])
 plt.xlabel('FFMC (Fine Fuel Moisture Code)')
 plt.ylabel('DC (Drought Code)')
 plt.title('FFMC vs DC')
