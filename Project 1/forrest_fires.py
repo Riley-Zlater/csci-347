@@ -79,13 +79,14 @@ for j in range(num_cols):
 print("\nAttribute pair with greatest covariance: ", att_names[att1], ",", att_names[att2])
 print("Greatest covariance: ", greatest_cov, "\n")
 
+plt.figure(6)
+plt.scatter(x=data[:,6], y=data[:,5])
+plt.xlabel('DC (Drought Code)')
+plt.ylabel('DMC (Duff Moisture Code)')
+plt.title('DC vs DMC (Greatest Covariance)')
+plt.show()
+
 std_norm_data = ml.standard_normalization(data)
-
-        
-
-##TODO: find std normalized attribute pair with greatest correlation + scatter plot
-
-##TODO: find std normalized attribute pair with smallest correlation + scatter plot
 
 #find attribute pairs with specific correlation / covariance
 num_rows, num_cols = data.shape
@@ -118,8 +119,24 @@ for j in range(num_cols):
 
 print("Attribute pair with greatest correlation: ", att_names[greatest_corr_att1], ",", att_names[greatest_corr_att2])
 print("Greatest correlation: ", greatest_corr, "\n")
+
+plt.figure(7)
+plt.scatter(x=data[:,6], y=data[:,5])
+plt.xlabel('DC (Drought Code)')
+plt.ylabel('DMC (Duff Moisture Code)')
+plt.title('DC vs DMC (Greatest Correlation)')
+plt.show()
+
 print("Attribute pair with smallest correlation: ", att_names[smallest_corr_att1], ",", att_names[smallest_corr_att2])
 print("Smallest correlation: ", smallest_corr, "\n")
+
+plt.figure(8)
+plt.scatter(x=data[:,9], y=data[:,8])
+plt.xlabel('Relative Humidity (%)')
+plt.ylabel('Temperature (Celsius)')
+plt.title('Relative Humidity vs Temperature (Smallest Correlation)')
+plt.show()
+
 print("\n# of attribute pairs: ", n);
 print("# of attribute pairs with correlation greater than .5: ", greater_corr)
 print("# of attribute pairs with negative covariance: ", neg_cov)
@@ -130,7 +147,7 @@ print("\nUSING RANGE-NORMALIZED DATA:")
 #find variance of total data set
 varByAttribute, totalVar = ml.variance(range_norm_data)
 
-print("Variance by attribute:\n", pd.DataFrame(varByAttribute))
+print("Variance by attribute:\n", pd.DataFrame(varByAttribute), "\n")
 print("Total variance of the data: ", totalVar)
 
 #find variance of only 5 largest variance attributes
