@@ -111,7 +111,6 @@ for j in range(num_cols):
 
 print("Standard normalized attribute pair with greatest correlation: ", att_names[greatest_corr_att1], ",", att_names[greatest_corr_att2])
 print("Greatest correlation: ", greatest_corr, "\n")
-<<<<<<< HEAD
 
 plt.figure(7)
 plt.scatter(x=data[:,6], y=data[:,5])
@@ -130,7 +129,6 @@ plt.ylabel('Temperature (Celsius)')
 plt.title('Relative Humidity vs Temperature (Smallest Correlation)')
 plt.show()
 
-=======
 print("Standard normalized attribute pair with smallest correlation: ", att_names[smallest_corr_att1], ",", att_names[smallest_corr_att2])
 print("Smallest correlation: ", smallest_corr, "\n")
 
@@ -152,7 +150,6 @@ for j in range(num_cols):
         if (cov < 0):
             neg_cov += 1
             
->>>>>>> 67157895576ebff5938107053a47f1fcce462b0b
 print("\n# of attribute pairs: ", n);
 print("# of attribute pairs with correlation greater than .5: ", greater_corr)
 print("# of attribute pairs with negative covariance: ", neg_cov)
