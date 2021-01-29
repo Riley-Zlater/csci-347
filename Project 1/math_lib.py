@@ -87,7 +87,6 @@ def covariance_matrix(d):
 
     return matrix
 
-
 def variance(d):
     num_rows, num_cols = d.shape
     means = mean(d)
