@@ -24,10 +24,11 @@ def degVert(edgeList, vertex):
         return len([n for n in G[str(vertex)]])
 
 
-#TODO: write a function that returns the clustering coefficient of a given vertex
 def clustCoeff(edgeList, vertex):
     G = nx.read_edgelist(edgeList)
-    pass
+    triDeg = nx.triangles(G, str(vertex))
+
+    return 2.0*triDeg / (degVert(edgeList, vertex)*(degVert(edgeList, vertex) - 1))
 
 
 #TODO: write a function that returns the betweenness centrality of a given vertex
@@ -48,4 +49,4 @@ def adjMatrix(edgeList):
     pass
 
 
-print(degVert(testEdgeList, 5))
+print(clustCoeff(testEdgeList, 5))
