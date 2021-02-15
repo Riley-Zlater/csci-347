@@ -28,7 +28,7 @@ def clustCoeff(edgeList, vertex):
     G = nx.read_edgelist(edgeList)
     triDeg = nx.triangles(G, str(vertex))
 
-    return 2.0*triDeg / (degVert(edgeList, vertex)*(degVert(edgeList, vertex) - 1))
+    return 2.0*triDeg / (degVert(edgeList, vertex)*(degVert(edgeList, vertex)-1))
 
 
 #TODO: write a function that returns the betweenness centrality of a given vertex
@@ -47,6 +47,3 @@ def avgShortPathLength(edgeList):
 def adjMatrix(edgeList):
     G = nx.read_edgelist(edgeList)
     pass
-
-
-print(clustCoeff(testEdgeList, 5))
