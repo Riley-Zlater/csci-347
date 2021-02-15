@@ -1,4 +1,5 @@
 import networkx as nx
+import scipy as sp
 
 # Written by Alexander Alvarez and Riley Slater
 # Write functions to perform graph analysis
@@ -44,21 +45,34 @@ def betweenCent(edgeList, vertex):
     return betweenness[str(vertex)]
 
 
-#TODO: write a function that returns the average shortest paths length of the graph
 def avgShortPathLength(edgeList):
     G = nx.read_edgelist(edgeList)
-    pass
+
+    average = 0.0
+    for n in G:
+        pathLen = nx.single_source_shortest_path_length(G, n)
+        average += sum(pathLen.values())
+
+    nodes = numVert(edgeList)
+    return average / (nodes* (nodes-1))
 
 
 #TODO: write a function that returns the adjacency matrix of the graph
 def adjMatrix(edgeList):
-    G = nx.read_edgelist(edgeList)
-    pass
+    size = numVert(edgeList)
+
+    matrix = [[0 for i in range(size)] for j in range(size)]
+    for row, col in edgeList:
+        matrix[row][col] = 1
+    return edgeList
 
 
 
 
 
+
+
+# See also: https://networkx.org/documentation/networkx-1.10/_modules/networkx/algorithms/centrality/betweenness.html#betweenness_centrality
 def helperSearch(G, node):
     X = []
     Y = {}
