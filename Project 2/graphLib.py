@@ -34,10 +34,12 @@ def degVert(edgeList, vertex):
 
 
 def clustCoeff(edgeList, vertex):
-    G = nx.read_edgelist(edgeList)
-    triDeg = nx.triangles(G, str(vertex))
 
-    return 2.0*triDeg / (degVert(edgeList, vertex)*(degVert(edgeList, vertex)-1))
+    k = degVert(edgeList, vertex)
+    G = nx.read_edgelist(edgeList, nodetype=int)
+    nbrs = nx.neighbors(G, vertex)
+
+    print (nbrs);
 
 
 def betweenCent(edgeList, vertex):

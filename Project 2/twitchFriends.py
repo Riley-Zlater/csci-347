@@ -7,9 +7,10 @@ import csv
 
 #import csv
 with open('twitch_eng.csv', newline='') as csvfile:
-    edges = np.array(list(csv.reader(csvfile)))
+    edges = np.array(list(csv.reader(csvfile))).astype(int)
     print(edges)
 
 #tests
 print("# of vertices: ", gl.numVert(edges))
-print("Degree of vertex 7069: ", gl.degVert(edges, '7069'))
+print("Degree of vertex 7069: ", gl.degVert(edges, 7069))
+gl.clustCoeff(edges, '')
