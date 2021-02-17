@@ -14,6 +14,8 @@ with open('twitch_eng.csv', newline='') as csvfile:
 #tests
 print("# of vertices: ", gl.numVert(edges))
 print("Degree of vertex 7069: ", gl.degVert(edges, 7069))
+print("Avg shortest path length: ", gl.avgShortPathLength(edges))
+print("Betweeness centrality of vertex 7069: ", gl.betweenCent(edges, 7069))
 #gl.clustCoeff(edges, '')
 
 

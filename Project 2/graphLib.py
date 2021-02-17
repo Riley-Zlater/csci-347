@@ -43,7 +43,9 @@ def clustCoeff(edgeList, vertex):
 
 
 def betweenCent(edgeList, vertex):
-    G = nx.read_edgelist(edgeList)
+    formattedEdgelist = [str(e[0]) + ' ' + str(e[1]) for e in edgeList]
+
+    G = nx.read_edgelist(formattedEdgelist)
     betweenness = dict.fromkeys(G, 0.0)
     nodes = G.nodes()
 
@@ -56,7 +58,8 @@ def betweenCent(edgeList, vertex):
 
 
 def avgShortPathLength(edgeList):
-    G = nx.read_edgelist(edgeList)
+    formattedEdgelist = [str(e[0]) + ' ' + str(e[1]) for e in edgeList]
+    G = nx.read_edgelist(formattedEdgelist)
 
     average = 0.0
     for n in G:
