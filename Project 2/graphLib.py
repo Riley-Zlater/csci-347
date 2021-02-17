@@ -8,6 +8,7 @@ import scipy as sp
 # edge list used for testing the functions
 #+-------------+
 testEdgeList = 'C:\\Users\\riley\\Desktop\\CSCI 347\\bn-cat-mixed-species_brain_1.edges'
+twitchEdgeList = 'twitch_eng.csv'
 #+-------------+
 
 
