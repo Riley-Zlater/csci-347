@@ -57,18 +57,15 @@ def avgShortPathLength(edgeList):
     return average / (nodes* (nodes-1))
 
 
-#TODO: write a function that returns the adjacency matrix of the graph
 def adjMatrix(edgeList):
+    G = nx.read_edgelist(edgeList)
     size = numVert(edgeList)
 
     matrix = [[0 for i in range(size)] for j in range(size)]
-    for row, col in edgeList:
-        matrix[row][col] = 1
-    return edgeList
-
-
-
-
+    for row, col in G.edges():
+        matrix[int(row)][int(col)] = 1
+        
+    return matrix
 
 
 
@@ -113,4 +110,4 @@ def helperScale(betweenness, graphSize):
     for n in betweenness:
         betweenness[n] *= s
     return betweenness
-            
+        
