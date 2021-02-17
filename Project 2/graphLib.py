@@ -24,12 +24,13 @@ def numVert(edgeList):
 
 
 def degVert(edgeList, vertex):
-    G = nx.read_edgelist(edgeList)
-    
-    if str(vertex) not in G:
-        print("Vertex", vertex, "is not in the graph.")
-    else:
-        return len([n for n in G[str(vertex)]])
+    deg = 0
+    for i in range(len(edgeList)):
+        for j in range(2):
+            e = edgeList[i][j]
+            if e == vertex:
+                deg = deg + 1
+    return deg
 
 
 def clustCoeff(edgeList, vertex):

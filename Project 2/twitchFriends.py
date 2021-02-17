@@ -12,3 +12,4 @@ with open('twitch_eng.csv', newline='') as csvfile:
 
 #tests
 print("# of vertices: ", gl.numVert(edges))
+print("Degree of vertex 7069: ", gl.degVert(edges, '7069'))
