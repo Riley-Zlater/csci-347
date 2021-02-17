@@ -17,5 +17,5 @@ print("Degree of vertex 7069: ", gl.degVert(edges, 7069))
 #gl.clustCoeff(edges, '')
 
 
-df = pd.DataFrame(gl.adjMatrix(edges))
-print(df)
+adjMatrix = pd.DataFrame(gl.adjMatrix(edges))
+print(adjMatrix)
