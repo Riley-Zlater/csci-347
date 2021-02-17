@@ -11,4 +11,4 @@ with open('twitch_eng.csv', newline='') as csvfile:
     print(edges)
 
 #tests
-# print(gl.numVert(G.edges))
+print("# of vertices: ", gl.numVert(edges))

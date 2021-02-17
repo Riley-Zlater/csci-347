@@ -13,8 +13,14 @@ twitchEdgeList = 'twitch_eng.csv'
 
 
 def numVert(edgeList):
-    G = nx.read_edgelist(edgeList)
-    return len(G)
+    verts = []
+    for i in range(len(edgeList)):
+        for j in range(2):
+            if edgeList[i][j] in verts:
+                continue
+            else:
+                verts.append(edgeList[i][j])
+    return len(verts)
 
 
 def degVert(edgeList, vertex):
