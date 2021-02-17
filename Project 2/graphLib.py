@@ -68,12 +68,11 @@ def avgShortPathLength(edgeList):
 
 
 def adjMatrix(edgeList):
-    G = nx.read_edgelist(edgeList)
     size = numVert(edgeList)
 
     matrix = [[0 for i in range(size)] for j in range(size)]
-    for row, col in G.edges():
-        matrix[int(row)][int(col)] = 1
+    for row, col in edgeList:
+        matrix[row][col] = 1
         
     return matrix
 
