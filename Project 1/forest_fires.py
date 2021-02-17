@@ -19,20 +19,25 @@ att_names = data[0,:]
 data = data[1:,:]
 
 #label encode
-encodedColumns = ml.label_encode(np.stack((data[:,2],data[:,3]), axis=1));
+encodedColumns = ml.label_encode(np.stack((data[:,2],data[:,3]), axis=1))
 data[:,2] = encodedColumns[:,0]
 data[:,3] = encodedColumns[:,1]
 data = data.astype(float)
 
 #format and print
-formattedData = pd.DataFrame(data);
+formattedData = pd.DataFrame(data)
 print("\nLabel encoded data:\n", formattedData)
 
 ### NO MISSING DATA. FILL NOT REQUIRED ###
 
-print("\nMultivariate mean: ", pd.DataFrame(ml.mean(data)))
+print("\nMultivariate mean: ", pd.DataFrame(np.stack((att_names,ml.mean(data)), axis = 1)))
 
-print("\nCovariance matrix:\n", pd.DataFrame(ml.covariance_matrix(data)))
+cov_matrix = pd.DataFrame(ml.covariance_matrix(data))
+cov_matrix = cov_matrix.round(decimals=4)
+
+pd.set_option("display.max_rows", None, "display.max_columns", None)
+
+print("\nCovariance matrix:\n", cov_matrix)
 
 #five scatter plots of pairs of attributes
 plt.figure(1)
@@ -70,6 +75,7 @@ range_norm_data = ml.range_normalization(data)
 range_norm_cov_mat = ml.covariance_matrix(range_norm_data);
 print("\nRange-normalized covariance matrix:\n", pd.DataFrame(range_norm_cov_mat))
 
+#get greatest covariance of range-normalized data
 num_rows, num_cols = range_norm_cov_mat.shape
 greatest_cov = 0
 for j in range(num_cols):
