@@ -29,22 +29,31 @@ def degVert(edgeList, vertex):
         for j in range(2):
             e = edgeList[i][j]
             if e == vertex:
-                deg = deg + 1
+                deg += 1
     return deg
 
 
 def clustCoeff(edgeList, vertex):
-
     k = degVert(edgeList, vertex)
-    G = nx.read_edgelist(edgeList, nodetype=int)
-    nbrs = nx.neighbors(G, vertex)
+    edges = [(e[0], e[1]) for e in edgeList]
+    nbrs = []
+    for e in edges:
+        if e[0] == vertex:
+            nbrs.append(e[1])
+        elif e[1] == vertex:
+            nbrs.append(e[0])
 
-    print (nbrs);
+    numEdges = 0
+    for v1 in nbrs:
+        for v2 in nbrs:
+            if (v1, v2) in edges or (v2, v1) in edges:
+                numEdges += 1
+
+    return (2 * numEdges) / (k*(k-1))
 
 
 def betweenCent(edgeList, vertex):
     formattedEdgelist = [str(e[0]) + ' ' + str(e[1]) for e in edgeList]
-
     G = nx.read_edgelist(formattedEdgelist)
     betweenness = dict.fromkeys(G, 0.0)
     nodes = G.nodes()
