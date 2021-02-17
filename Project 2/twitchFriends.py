@@ -19,5 +19,5 @@ print("Betweeness centrality of vertex 7069: ", gl.betweenCent(edges, 7069))
 #gl.clustCoeff(edges, '')
 
 
-df = pd.DataFrame(gl.adjMatrix(edges))
-print(df)
+adjMatrix = pd.DataFrame(gl.adjMatrix(edges))
+print(adjMatrix)

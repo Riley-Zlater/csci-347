@@ -74,8 +74,8 @@ def adjMatrix(edgeList):
     size = numVert(edgeList)
 
     matrix = [[0 for i in range(size)] for j in range(size)]
-    for row, col in edgeList:
-        matrix[row][col] = 1
+    for i, j in edgeList:
+        matrix[i][j] = 1
         
     return matrix
 
