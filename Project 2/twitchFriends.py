@@ -8,8 +8,7 @@ import csv
 #import csv
 with open('twitch_eng.csv', newline='') as csvfile:
     edges = np.array(list(csv.reader(csvfile)))
-    G = nx.read_edgelist(edges)
+    print(edges)
 
 #tests
-print(gl.numVert(G.edges))
-print()
+# print(gl.numVert(G.edges))
