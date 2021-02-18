@@ -48,7 +48,8 @@ def clustCoeff(edgeList, vertex):
         for v2 in nbrs:
             if (v1, v2) in edges or (v2, v1) in edges:
                 numEdges += 1
-
+    if k == 0:
+        return 0
     return (2 * numEdges) / (k*(k-1))
 
 
@@ -83,8 +84,8 @@ def adjMatrix(edgeList):
     size = numVert(edgeList)
 
     matrix = [[0 for i in range(size)] for j in range(size)]
-    for i, j in edgeList:
-        matrix[i][j] = 1
+    for i in range(len(edgeList)):
+        matrix[edgeList[i][0]][edgeList[i][1]] = 1
         
     return matrix
 
