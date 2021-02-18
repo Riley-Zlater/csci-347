@@ -9,24 +9,26 @@ import random as rd
 
 def randomNodeSampling(G, n):
     toRemove = len(G)-n
-    for n in range(toRemove):
+    for i in range(toRemove):
         G.remove_node(list(G)[rd.randrange(0, len(list(G)))])
-    return np.array([[e[0], e[1]] for e in nx.edges(G)])
+    return np.array([[e[0], e[1]] for e in G.edges]), nx.parse_edgelist([str(e[0]) + ' ' + str(e[1]) for e in G.edges])
 
 #import csv
 with open('twitch_eng.csv', newline='') as csvfile:
     edges = np.array(list(csv.reader(csvfile))).astype(int)
     formattedEdgelist = [str(e[0]) + ' ' + str(e[1]) for e in edges]
     G = nx.parse_edgelist(formattedEdgelist, nodetype=int)
-    sampledEdges = randomNodeSampling(G, 2000)
+    sampledEdges, G = randomNodeSampling(G, 2000)
 
 #tests
-print("# of sampled vertices: ", gl.numVert(sampledEdges))
+print("# of sampled vertices: ", gl.numVert([[e[0], e[1]] for e in G.edges]))
+print("# of sampled vertices: ", len(G))
 node = list(G)[rd.randrange(0, len(G))]
 print("Degree of vertex " + str(node) + ": ", gl.degVert(sampledEdges, node))
 print("Clustering coefficient of vertex " + str(node) + ": ", gl.clustCoeff(sampledEdges, node))
 print("Avg shortest path length: ", gl.avgShortPathLength(sampledEdges))
-print("Betweeness centrality of vertex " + str(node) + " : ", gl.betweenCent(sampledEdges, node))
+# print("Betweeness centrality of vertex " + str(node) + " : ", gl.betweenCent(sampledEdges, node))
 
 adjMatrix = pd.DataFrame(gl.adjMatrix(sampledEdges))
 print(adjMatrix)
+print("# of sampled vertices: ", len(G))
