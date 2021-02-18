@@ -26,7 +26,7 @@ node = list(G)[rd.randrange(0, len(G))]
 print("Degree of vertex " + str(node) + ": ", gl.degVert(sampledEdges, node))
 print("Clustering coefficient of vertex " + str(node) + ": ", gl.clustCoeff(sampledEdges, node))
 print("Avg shortest path length: ", gl.avgShortPathLength(sampledEdges))
-print("Betweeness centrality of vertex" + str(node) + ": ", gl.betweenCent(sampledEdges, node))
+print("Betweeness centrality of vertex " + str(node) + " : ", gl.betweenCent(sampledEdges, node))
 
 adjMatrix = pd.DataFrame(gl.adjMatrix(sampledEdges))
 print(adjMatrix)

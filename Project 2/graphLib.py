@@ -48,7 +48,7 @@ def clustCoeff(edgeList, vertex):
         for v2 in nbrs:
             if (v1, v2) in edges or (v2, v1) in edges:
                 numEdges += 1
-    if k == 0:
+    if k <= 1:
         return 0
     return (2 * numEdges) / (k*(k-1))
 
