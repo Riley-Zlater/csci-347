@@ -4,8 +4,11 @@ import numpy as np
 import pandas as pd
 import networkx as nx
 import graphLib as gl
+import matplotlib.pyplot as plt
 import csv
 import random as rd
+
+rd.seed(42069)
 
 def randomNodeSampling(G, n):
     toRemove = len(G)-n
@@ -26,7 +29,11 @@ node = list(G)[rd.randrange(0, len(G))]
 print("Degree of vertex " + str(node) + ": ", gl.degVert(sampledEdges, node))
 print("Clustering coefficient of vertex " + str(node) + ": ", gl.clustCoeff(sampledEdges, node))
 print("Avg shortest path length: ", gl.avgShortPathLength(sampledEdges))
-print("Betweeness centrality of vertex " + str(node) + " : ", gl.betweenCent(sampledEdges, node))
+#print("Betweeness centrality of vertex " + str(node) + " : ", gl.betweenCent(sampledEdges, node))
 
-adjMatrix = pd.DataFrame(gl.adjMatrix(sampledEdges))
-print(adjMatrix)
+plt.figure(figsize=(20, 20))
+nx.draw(G, node_size=5)
+plt.show()
+
+#adjMatrix = pd.DataFrame(gl.adjMatrix(sampledEdges))
+#print(adjMatrix)
