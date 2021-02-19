@@ -32,8 +32,10 @@ print("Clustering coefficient of vertex " + str(node) + ": ", gl.clustCoeff(samp
 print("Avg shortest path length: ", gl.avgShortPathLength(sampledEdges))
 #print("Betweeness centrality of vertex " + str(node) + " : ", gl.betweenCent(sampledEdges, node))
 
-plt.figure(figsize=(20, 20))
-nx.draw(G, node_size=5)
+plt.figure(figsize=(7, 7))
+deg = dict(nx.degree(G))
+betw = nx.betweenness_centrality(G)
+nx.draw_spring(G, nodelist=deg.keys(), node_color=[v for v in deg.values()], node_size=[v * 2000 for v in betw.values()])
 plt.show()
 
 #adjMatrix = pd.DataFrame(gl.adjMatrix(sampledEdges))
