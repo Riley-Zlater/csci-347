@@ -47,7 +47,7 @@ def clustCoeff(edgeList, vertex):
                 numEdges += 1
     if k <= 1:
         return 0
-    return (2 * numEdges) / (k * (k - 1))
+    return (numEdges) / (k * (k - 1))
 
 
 def betweenCent(edgeList, vertex):
@@ -61,7 +61,7 @@ def betweenCent(edgeList, vertex):
         betweenness = helperAccumulate(betweenness, X, Y, sig, i)
     betweenness = helperScale(betweenness, len(G))
 
-    return betweenness[str(vertex)]
+    return betweenness[vertex]
 
 
 def avgShortPathLength(edgeList):
