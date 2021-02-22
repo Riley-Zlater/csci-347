@@ -7,6 +7,9 @@ import numpy as np
 
 
 def numVert(edgeList):
+
+
+
     verts = []
     for i in range(len(edgeList)):
         if edgeList[i][0] not in verts:
