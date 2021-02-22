@@ -6,14 +6,6 @@ import numpy as np
 # Write functions to perform graph analysis
 
 
-# edge list used for testing the functions
-# +-------------+
-testEdgeList = 'C:\\Users\\riley\\Desktop\\CSCI 347\\bn-cat-mixed-species_brain_1.edges'
-
-
-# +-------------+
-
-
 def numVert(edgeList):
     verts = []
     for i in range(len(edgeList)):
