@@ -1,4 +1,6 @@
 # Test case graphs for Project 2: CSCI 347
+import networkx as nx
+
 
 g0 = nx.Graph()
 g0.add_edge(1,2)

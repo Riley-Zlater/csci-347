@@ -7,8 +7,17 @@ import graphLib as gl
 import matplotlib.pyplot as plt
 import csv
 import random as rd
+import test_case_graphs as tg
+
 
 rd.seed(42069)
+
+# test graphs
+test1 = tg.graph_0
+test3 = tg.graph_3
+test4 = tg.graph_4 #numVert is 49 should be 50
+test7 = tg.graph_7
+test8 = tg.graph_8
 
 def randomNodeSampling(G, n):
     toRemove = len(G)-n
@@ -24,6 +33,7 @@ with open('twitch_eng.csv', newline='') as csvfile:
     sampledEdges, G = randomNodeSampling(G, 2000)
 
 #tests
+
 print("# of sampled vertices: ", gl.numVert([[e[0], e[1]] for e in G.edges]))
 print("# of sampled vertices: ", len(G))
 node = list(G)[rd.randrange(0, len(G))]
