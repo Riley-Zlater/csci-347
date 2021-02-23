@@ -7,9 +7,6 @@ import numpy as np
 
 
 def numVert(edgeList):
-
-
-
     verts = []
     for i in range(len(edgeList)):
         if edgeList[i][0] not in verts:
@@ -22,32 +19,36 @@ def numVert(edgeList):
 
 def degVert(edgeList, vertex):
     deg = 0
-    for i in range(len(edgeList)):
-        for j in range(2):
-            e = edgeList[i][j]
-            if e == vertex:
-                deg += 1
+    for e in edgeList:
+        if int(e[0]) == int(vertex):
+            deg += 1;
+        elif int(e[1]) == int(vertex):
+            deg += 1;
     return deg
 
 
 def clustCoeff(edgeList, vertex):
     k = degVert(edgeList, vertex)
-    edges = [(e[0], e[1]) for e in edgeList]
     nbrs = []
-    for e in edges:
-        if e[0] == vertex:
-            nbrs.append(e[1])
-        elif e[1] == vertex:
-            nbrs.append(e[0])
+    for e in edgeList:
+        if int(e[0]) == int(vertex):
+            if e[1] not in nbrs:
+                nbrs.append(e[1])
+        elif int(e[1]) == int(vertex):
+            if e[0] not in nbrs:
+                nbrs.append(e[0])
 
-    numEdges = 0
+    totalEdges = []
     for v1 in nbrs:
         for v2 in nbrs:
-            if (v1, v2) in edges or (v2, v1) in edges:
-                numEdges += 1
+            if [v1, v2] not in totalEdges and [v2, v1] not in totalEdges:
+                if [v1, v2] in edgeList:
+                    totalEdges.append([v1,v2])
+                elif [v2, v1] in edgeList:
+                    totalEdges.append([v2,v1])
     if k <= 1:
         return 0
-    return (numEdges) / (k * (k - 1))
+    return (len(totalEdges)) / (k * (k - 1))
 
 
 def betweenCent(edgeList, vertex):
