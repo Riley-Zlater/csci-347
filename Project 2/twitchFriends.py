@@ -10,7 +10,7 @@ import test_case_graphs as tg
 # Written by Alexander Alvarez and Riley Slater
 
 # Set True for graphs
-GRAPHDISPLAY = False
+GRAPHDISPLAY = True
 
 
 def randomNodeSampling(G, n):
