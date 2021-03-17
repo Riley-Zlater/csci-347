@@ -2,11 +2,11 @@ import numpy as np
 from sklearn.metrics import pairwise_distances_argmin
 
 # k - means written by Riley Slater
-def kmeans(data, numClusters, epsilon=None, seed=0):
+def kmeans(data, k, epsilon=None, seed=0):
 
     # randomly select clusters
     randomNum = np.random.RandomState(seed)
-    randomData = randomNum.permutation(data.shape[0])[:numClusters]
+    randomData = randomNum.permutation(data.shape[0])[:k]
     center = data[randomData]
      
     while True:
@@ -16,11 +16,11 @@ def kmeans(data, numClusters, epsilon=None, seed=0):
 
         # centers found from the means
         newCenter = np.array([data[label == i].mean(0)
-                               for i in range(numClusters)])
+                               for i in range(k)])
 
         # convergence check
         # If the convergence parameter
-        # is epsilon then should we be chekcing if
+        # is epsilon then should we be checking if
         # center == epsilon?
         if np.all(center == newCenter):
             break
