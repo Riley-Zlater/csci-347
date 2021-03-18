@@ -8,12 +8,12 @@ from sklearn.decomposition import PCA
 
 # plot the first 2 attributes of the data
 def drawDBSCAN_2D(labeledData):
-    plt.scatter(np.array(labeledData[0])[:, 0], np.array(labeledData[0])[:, 1], c='r', marker='.')
+    plt.scatter(np.array(labeledData[0])[:, 0], np.array(labeledData[0])[:, 1], c='b', marker='.')
     for i in range(1, len(labeledData.keys())):
-        plt.scatter(np.array(labeledData[i]['C'])[:, 0], np.array(labeledData[i]['C'])[:, 1], c='g', marker='X')
+        plt.scatter(np.array(labeledData[i]['C'])[:, 0], np.array(labeledData[i]['C'])[:, 1], color=cm.hot((i-1)/len(labeledData.keys())), marker='p')
         if len(labeledData[i]['B']) == 0:
             continue
-        plt.scatter(np.array(labeledData[i]['B'])[:, 0], np.array(labeledData[i]['B'])[:, 1], c='b', marker='p')
+        plt.scatter(np.array(labeledData[i]['B'])[:, 0], np.array(labeledData[i]['B'])[:, 1], color=cm.hot((i-1)/len(labeledData.keys())), marker='X')
     plt.show()
 
 def drawKMEANS_2D(means, labeledData):
@@ -35,7 +35,7 @@ pcaData = pca.transform(data)
 print(pcaData)
 
 #plot dbscan
-#drawDBSCAN_2D(cl.dbscan(pcaData, .7, 9))
+drawDBSCAN_2D(cl.dbscan(pcaData, .7, 9))
 
 #plot kmeans
 means, labeledData = cl.kmeans(pcaData, 3, .01, 0)
