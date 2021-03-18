@@ -21,11 +21,16 @@ def kmeans(data, k, epsilon, seed=0):
         if np.linalg.norm(centers-newCenters) < epsilon:
             centers = newCenters
             break
-
+        #assignment
         centers = newCenters
 
-    return centers, labels
-
+    labeledData = {}
+    for c in range(1, len(centers)+1):
+        labeledData[c] = []
+    for p in data:
+        labeledData[findClosestCenter(p, centers)+1].append(p)
+        
+    return labeledData
 
 # DBSCAN written by Alexander Alvarez
 def dbscan(data, eps, minpts):
@@ -100,10 +105,10 @@ def findInRange(p, data, dist):
     return pts
 
 def findClosestCenter(p, centers):
-    closestCenter = centers[0]
-    dist = np.linalg.norm(p - closestCenter)
-    for c in centers:
-        d = np.linalg.norm(p - c);
+    closestCenter = 0
+    dist = np.linalg.norm(p - centers[0])
+    for c in range(len(centers)):
+        d = np.linalg.norm(p - centers[c]);
         if d < dist:
             closestCenter = c
             dist = d
