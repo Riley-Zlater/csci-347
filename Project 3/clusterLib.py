@@ -3,30 +3,28 @@ from sklearn.metrics import pairwise_distances_argmin
 
 
 # k - means written by Riley Slater
-def kmeans(data, k, epsilon=None, seed=0):
+def kmeans(data, k, epsilon, seed=0):
     # randomly select clusters
     randomNum = np.random.RandomState(seed)
     randomData = randomNum.permutation(data.shape[0])[:k]
-    center = data[randomData]
+    centers = data[randomData]
 
     while True:
-
         # labels based on closest center
-        label = pairwise_distances_argmin(data, center)
+        labels = [findClosestCenter(p, centers) for p in data]
 
         # centers found from the means
-        newCenter = np.array([data[label == i].mean(0)
+        newCenters = np.array([data[labels == i].mean(0)
                               for i in range(k)])
 
         # convergence check
-        # If the convergence parameter
-        # is epsilon then should we be checking if
-        # center == epsilon?
-        if np.all(center == newCenter):
+        if np.linalg.norm(centers-newCenters) < epsilon:
+            centers = newCenters
             break
-        center = newCenter
 
-    return center, label
+        centers = newCenters
+
+    return centers, labels
 
 
 # DBSCAN written by Alexander Alvarez
@@ -100,6 +98,16 @@ def findInRange(p, data, dist):
         if np.linalg.norm(p - v) <= dist:
             pts.append(v)
     return pts
+
+def findClosestCenter(p, centers):
+    closestCenter = centers[0]
+    dist = np.linalg.norm(p - closestCenter)
+    for c in centers:
+        d = np.linalg.norm(p - c);
+        if d < dist:
+            closestCenter = c
+            dist = d
+    return closestCenter
 
 def isLabeled(labels, point):
     p = point.tolist()
