@@ -3,34 +3,41 @@ from sklearn.metrics import pairwise_distances_argmin
 
 
 # k - means written by Riley Slater
-def kmeans(data, k, epsilon, seed=0):
+def kmeans(data, k, eps, seed=0):
     # randomly select clusters
     randomNum = np.random.RandomState(seed)
     randomData = randomNum.permutation(data.shape[0])[:k]
-    centers = data[randomData]
+    means = data[randomData]
 
     while True:
-        # labels based on closest center
-        labels = [findClosestCenter(p, centers) for p in data]
+        # label points based on closest center
+        labeledData = {}
+        for c in range(len(means)):
+            labeledData[c] = []
+        for p in data:
+            labeledData[findClosestCenter(p, means)].append(p)
 
-        # centers found from the means
-        newCenters = np.array([data[labels == i].mean(0)
-                              for i in range(k)])
+        # find new means based on labels
+        newMeans = []
+        for i in range(k):
+            newMeans.append([np.array(labeledData[i][j]).mean() for j in range(data.shape[1])])
+        newMeans = np.array(newMeans)
 
         # convergence check
-        if np.linalg.norm(centers-newCenters) < epsilon:
-            centers = newCenters
+        converged = True
+        for i in range(len(means)):
+            if np.linalg.norm(means[i]-newMeans[i]) > eps:
+                converged = False
+                break
+        if converged:
             break
-        #assignment
-        centers = newCenters
 
-    labeledData = {}
-    for c in range(1, len(centers)+1):
-        labeledData[c] = []
-    for p in data:
-        labeledData[findClosestCenter(p, centers)+1].append(p)
-        
-    return labeledData
+        #assignment
+        means = newMeans
+
+
+
+    return means, labeledData
 
 # DBSCAN written by Alexander Alvarez
 def dbscan(data, eps, minpts):
@@ -42,9 +49,9 @@ def dbscan(data, eps, minpts):
             #C: [] <- core points
             #B: [] <- boundary points
     }
+
     # loop over each point
     for p in data:
-        i = data.tolist().index(p.tolist())
 
         # if point is labeled, skip
         if isLabeled(labels, p):
@@ -144,9 +151,9 @@ X = np.array([[1, 2], [1, 4], [1, 0],
               [10, 2], [10, 4], [10, 0]])
 
 skmeans = KMeans(n_clusters=2, random_state=0).fit(X)
-centers, labels = kmeans(X, 2)
+#centers, labels = kmeans(X, 2)
 
-print("(seed = 0) sklearn alg labels:\n", skmeans.labels_)
-print("(seed = 0) our alg labels\n", labels, '\n')
-print("(seed = 0) sklearn alg cluster centers:\n", skmeans.cluster_centers_)
-print("(seed = 0) our alg cluster centers:\n", centers)
+#print("(seed = 0) sklearn alg labels:\n", skmeans.labels_)
+#print("(seed = 0) our alg labels\n", labels, '\n')
+#print("(seed = 0) sklearn alg cluster centers:\n", skmeans.cluster_centers_)
+#print("(seed = 0) our alg cluster centers:\n", centers)
