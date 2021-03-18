@@ -1,6 +1,6 @@
 import numpy as np
 
-# k - means written by Riley Slater
+# k - means written by Alexander Alvarez and Riley Slater
 def kmeans(data, k, eps, seed=0):
     # randomly select clusters
     randomNum = np.random.RandomState(seed)
