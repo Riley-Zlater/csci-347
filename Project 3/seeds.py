@@ -17,7 +17,7 @@ def drawDBSCAN_2D(labeledData):
     plt.show()
 
 def drawKMEANS_2D(means, labeledData):
-    plt.scatter(np.array(means)[:, 0], np.array(means)[:, 1], color='r', marker='X')
+    plt.scatter(np.array(means)[:, 0], np.array(means)[:, 1], color='g', marker='X')
     for i in range(len(labeledData.keys())):
         plt.scatter(np.array(labeledData[i])[:, 0], np.array(labeledData[i])[:, 1], color=cm.hot(i/len(labeledData.keys())), marker='p')
     plt.show()
@@ -38,6 +38,6 @@ print(pcaData)
 #drawDBSCAN_2D(cl.dbscan(pcaData, .7, 9))
 
 #plot kmeans
-means, labeledData = cl.kmeans(pcaData, 3, .001, 0)
+means, labeledData = cl.kmeans(pcaData, 3, .01, 0)
 drawKMEANS_2D(means, labeledData)
 

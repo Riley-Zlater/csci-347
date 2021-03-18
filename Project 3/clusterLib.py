@@ -20,13 +20,15 @@ def kmeans(data, k, eps, seed=0):
         # find new means based on labels
         newMeans = []
         for i in range(k):
-            newMeans.append([np.array(labeledData[i][j]).mean() for j in range(data.shape[1])])
+            newMeans.append(np.array(labeledData[i]).mean(0).tolist())
         newMeans = np.array(newMeans)
 
         # convergence check
         converged = True
         for i in range(len(means)):
-            if np.linalg.norm(means[i]-newMeans[i]) > eps:
+            delta = np.linalg.norm(means[i]-newMeans[i])
+            print(delta)
+            if delta > eps:
                 converged = False
                 break
         if converged:
