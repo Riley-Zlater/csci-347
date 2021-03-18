@@ -1,8 +1,6 @@
 import numpy as np
-from sklearn.metrics import pairwise_distances_argmin
 
-
-# k - means written by Riley Slater
+# k - means written by Alexander Alvarez and Riley Slater
 def kmeans(data, k, eps, seed=0):
     # randomly select clusters
     randomNum = np.random.RandomState(seed)
@@ -145,17 +143,3 @@ def labelPoint(labels, label, point):
         labels[0].append(point.tolist())
     else:
         labels[label[0]][label[1]].append(point.tolist())
-
-### TEST ###
-from sklearn.cluster import KMeans
-
-X = np.array([[1, 2], [1, 4], [1, 0],
-              [10, 2], [10, 4], [10, 0]])
-
-skmeans = KMeans(n_clusters=2, random_state=0).fit(X)
-#centers, labels = kmeans(X, 2)
-
-#print("(seed = 0) sklearn alg labels:\n", skmeans.labels_)
-#print("(seed = 0) our alg labels\n", labels, '\n')
-#print("(seed = 0) sklearn alg cluster centers:\n", skmeans.cluster_centers_)
-#print("(seed = 0) our alg cluster centers:\n", centers)
