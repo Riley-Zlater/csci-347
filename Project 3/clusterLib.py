@@ -1,5 +1,6 @@
 import numpy as np
 
+
 # k - means written by Alexander Alvarez and Riley Slater
 def kmeans(data, k, eps, seed=0):
     # randomly select clusters
@@ -24,28 +25,29 @@ def kmeans(data, k, eps, seed=0):
         # convergence check
         converged = True
         for i in range(len(means)):
-            delta = np.linalg.norm(means[i]-newMeans[i])
-            print(delta)
+            delta = np.linalg.norm(means[i] - newMeans[i])
+            # print(delta) Do we still need this print?
             if delta > eps:
                 converged = False
                 break
         if converged:
             break
 
-        #assignment
+        # assignment
         means = newMeans
 
     return means, labeledData
+
 
 # DBSCAN written by Alexander Alvarez
 def dbscan(data, eps, minpts):
     # initialization
     C = 0
     labels = {
-        0: [] #<- noise
-        #1: {  <- cluster #1
-            #C: [] <- core points
-            #B: [] <- boundary points
+        0: []  # <- noise
+        # 1: {  <- cluster #1
+        # C: [] <- core points
+        # B: [] <- boundary points
     }
 
     # loop over each point
@@ -85,7 +87,7 @@ def labelNbrs(C, nbrs, minpts, eps, data, labels):
         # if neighbor is labeled, continue
         if isLabeled(labels, q):
             # if neighbor is labeled as noise, relabel
-            if isLabeledNoise(labels,  q):
+            if isLabeledNoise(labels, q):
                 labelPoint(labels, [C, 'B'], q)
             continue
 
@@ -109,6 +111,7 @@ def findInRange(p, data, dist):
             pts.append(v)
     return pts
 
+
 def findClosestCenter(p, centers):
     closestCenter = 0
     dist = np.linalg.norm(p - centers[0])
@@ -118,6 +121,7 @@ def findClosestCenter(p, centers):
             closestCenter = c
             dist = d
     return closestCenter
+
 
 def isLabeled(labels, point):
     p = point.tolist()
@@ -131,9 +135,11 @@ def isLabeled(labels, point):
             elif p in label['B']:
                 return True
 
+
 def isLabeledNoise(labels, point):
     if point.tolist() in labels[0]:
         return True
+
 
 # label is 0 for Noise or [i, 'C'|'B'], where i = cluster #, 'C' = core point, 'B' = boundary point
 def labelPoint(labels, label, point):
