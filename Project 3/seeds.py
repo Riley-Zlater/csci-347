@@ -5,10 +5,14 @@ import matplotlib.cm as cm
 from sklearn.decomposition import PCA
 from sklearn.cluster import KMeans, DBSCAN
 
+# Written by Alexander Alvarez and Riley Slater
 
+
+# set True to show all
 GRAPH = True
 KMEANSTESTS = True
 DBSCANTESTS = True
+
 
 # plot the first 2 attributes of the data
 def drawDBSCAN_2D(labeledData):
@@ -43,17 +47,27 @@ pca = PCA(n_components=2)
 pca.fit(data)
 pcaData = pca.transform(data)
 
+# plot our dbscan
+if GRAPH:
+    drawDBSCAN_2D(cl.dbscan(pcaData, .7, 9))
+
+# plot our kmeans
+if GRAPH:
+    means, labeledData = cl.kmeans(pcaData, 3, .01, 0)
+    drawKMEANS_2D(means, labeledData)
+
+# plot data reduced to two dimensions with pca
 if GRAPH:
     plt.scatter(pcaData[:, 0], pcaData[:, 1])
     plt.title('pc1 vs pc2')
     plt.show()
-    print('The graph of the pca data with two components has about three clusters')
 
 # PCA the data with no specified components
 pca2 = PCA()
 pca2.fit(data)
 pcaData2 = pca2.transform(data)
 
+# elbow plot of the fraction of total variance preserved by principal components
 if GRAPH:
     row, col = pcaData2.shape
     plt.plot(range(1, col + 1), np.cumsum(pca2.explained_variance_ratio_), marker='*')
@@ -62,19 +76,12 @@ if GRAPH:
     plt.ylabel('f(r) : fraction of total variance preserved')
     plt.show()
 
+    # Do we need to print this information if we say it in the report, Alex? Riley
     print("\nWe will use three components and the fraction of total variance\n"
           "captured by three components is {:0.3f}"
           .format(np.cumsum(pca2.explained_variance_ratio_)[2]), '\n')
 
-# plot dbscan
-if GRAPH:
-    drawDBSCAN_2D(cl.dbscan(pcaData, .7, 9))
-
-# plot kmeans
-if GRAPH:
-    means, labeledData = cl.kmeans(pcaData, 3, .01, 0)
-    drawKMEANS_2D(means, labeledData)
-
+# test k means with original and pca data
 if KMEANSTESTS:
     print('Inertia values for kmeans for clusters 1 - 5'
           ' with the original data')
@@ -88,9 +95,8 @@ if KMEANSTESTS:
         pcaKmeans = KMeans(n_clusters=i).fit(pcaData2)
         print('{:0.2f}'.format(pcaKmeans.inertia_))
 
-
+# test DBSCAN with original and pca data
 if DBSCANTESTS:
-    # tests with original data
     print('\nThe number of clusters found for eps 0.4 - 0.8 with original data')
     for i in np.arange(0.4, 0.9, 0.1):
         originalDBSCAN = DBSCAN(eps=i, min_samples=9).fit(data)
@@ -101,7 +107,6 @@ if DBSCANTESTS:
         originalDBSCAN2 = DBSCAN(eps=0.7, min_samples=i).fit(data)
         print(len(set(originalDBSCAN2.labels_)) - (1 if -1 in originalDBSCAN2.labels_ else 0))
 
-    # tests with the PCA data from problem 9
     print('\nThe number of clusters found for eps 0.4 - 0.8 with pca data')
     for i in np.arange(0.4, 0.9, 0.1):
         pcaDBSCAN = DBSCAN(eps=i, min_samples=9).fit(pcaData2)
@@ -111,4 +116,3 @@ if DBSCANTESTS:
     for i in range(6, 11):
         pcaDBSCAN2 = DBSCAN(eps=0.7, min_samples=i).fit(pcaData2)
         print(len(set(pcaDBSCAN2.labels_)) - (1 if -1 in pcaDBSCAN2.labels_ else 0))
-
