@@ -14,7 +14,8 @@ KMEANSTESTS = True
 DBSCANTESTS = True
 
 
-# plot the first 2 attributes of the data
+# helper function to plot the first 2 attributes of the
+# data using our DBSCAN algorithm
 def drawDBSCAN_2D(labeledData):
     plt.scatter(np.array(labeledData[0])[:, 0], np.array(labeledData[0])[:, 1], c='b', marker='.')
     for i in range(1, len(labeledData.keys())):
@@ -28,6 +29,8 @@ def drawDBSCAN_2D(labeledData):
     plt.show()
 
 
+# helper function to plot the first 2 attributes
+# of the data using our kmeans algorithm
 def drawKMEANS_2D(means, labeledData):
     plt.scatter(np.array(means)[:, 0], np.array(means)[:, 1], color='g', marker='X')
     for i in range(len(labeledData.keys())):
