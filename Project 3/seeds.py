@@ -79,10 +79,6 @@ if GRAPH:
     plt.ylabel('f(r) : fraction of total variance preserved')
     plt.show()
 
-    # Do we need to print this information if we say it in the report, Alex? Riley
-    print("\nWe will use three components and the fraction of total variance\n"
-          "captured by three components is {:0.3f}"
-          .format(np.cumsum(pca2.explained_variance_ratio_)[2]), '\n')
 
 # test k means with original and pca data
 if KMEANSTESTS:
