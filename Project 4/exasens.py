@@ -46,6 +46,7 @@ attNames = np.delete(attNames, 7)
 print("Encoded Data:\n", formattedData(D, attNames))
 
 # separate classifications
+classLabels = ["HC","COPD","Asthma","Infected"]
 classes = D[:, 0]
 D = D[:, 1:]
 
@@ -106,8 +107,123 @@ def drawKMEANS_2D(means, labeledData):
 
 
 # plot dbscan
-drawDBSCAN_2D(cl.dbscan(D_PCA2, .145, 9))
+labeledDataDBSCAN = cl.dbscan(D_PCA2, .145, 9)
+#drawDBSCAN_2D(labeledDataDBSCAN)
 
 # plot kmeans
-means, labeledData = cl.kmeans(D_PCA2, 4, .01)
-drawKMEANS_2D(means, labeledData)
+means, labeledDataKMeans = cl.kmeans(D_PCA2, 4, .01)
+#drawKMEANS_2D(means, labeledDataKMeans)
+
+# Find precision of a cluster for a given class
+def precision(labeledData, origData, key, classLabel):
+    truePositives = 0
+    totalPositives = 0
+    for instance in labeledData[key]:
+        totalPositives += 1
+        for idx, arr in enumerate(origData):
+            similar = True
+            for i, flt in enumerate(arr):
+                if flt != instance[i]:
+                    similar = False
+                    break
+            if similar:
+                if classLabel == classes[idx]:
+                    truePositives += 1
+                    break
+    return truePositives/totalPositives
+
+# Find recalls of a cluster for a given class
+def recall(labeledData, origData, key, classLabel):
+    truePositives = 0
+    for instance in labeledData[key]:
+        for idx, arr in enumerate(origData):
+            similar = True
+            for i, flt in enumerate(arr):
+                if flt != instance[i]:
+                    similar = False
+                    break
+            if similar:
+                if classLabel == classes[idx]:
+                    truePositives += 1
+                    break
+
+    falseNegatives = 0
+    for idx, arr in enumerate(origData):
+        if classes[idx] != classLabel:
+            continue
+        classifiedCorrectly = False
+        for instance in labeledData[key]:
+            similar = True
+            for i, flt in enumerate(arr):
+                if flt != instance[i]:
+                    similar = False
+                    break
+            if similar:
+                classifiedCorrectly = True
+                break
+        if not classifiedCorrectly:
+            falseNegatives += 1
+    if truePositives + falseNegatives == 0:
+        return 0
+    return truePositives / (truePositives + falseNegatives)
+
+# Use precision and recall to determine each cluster's class
+def classifyLabels(labeledData, origData, precisionWeight=1, recallWeight=1):
+    labelsToClasses = {}
+    # Calculate measurements for each class
+    for key in labeledData.keys():
+        labelsToClasses[key] = {}
+        for classLabel in classLabels:
+            labelsToClasses[key][classLabel] = {}
+            labelsToClasses[key][classLabel]["Precision"] = precision(labeledData, origData, key, classLabel)
+            labelsToClasses[key][classLabel]["Recall"] = recall(labeledData, origData, key, classLabel)
+
+    # Select classes with best representation within each cluster
+    for key in labelsToClasses.keys():
+        highestPerformance = 0
+        selectedClassLabel = ""
+        for classLabel in labelsToClasses[key].keys():
+            performance = (precisionWeight * labelsToClasses[key][classLabel]["Precision"]) + (recallWeight * labelsToClasses[key][classLabel]["Recall"])
+            if performance > highestPerformance:
+                highestPerformance = performance
+                selectedClassLabel = classLabel
+
+        for classLabel in classLabels:
+            if classLabel != selectedClassLabel:
+                del labelsToClasses[key][classLabel]
+
+    return labelsToClasses
+
+def printResults(labelsToClasses, methodName):
+    print()
+    print(methodName)
+    for key in labelsToClasses.keys():
+        print()
+        print("Cluster #"+str(key))
+        classLabel = list(labelsToClasses[key].keys())[0]
+        print("Classification:", classLabel)
+        print("Precision", labelsToClasses[key][classLabel]["Precision"])
+        print("Recall", labelsToClasses[key][classLabel]["Recall"])
+
+printResults(classifyLabels(labeledDataKMeans, D_PCA2, precisionWeight=1, recallWeight=2), "K-Means 2 Components")
+
+# format DBSCAN
+def formatDBSCAN(labeledData):
+    del labeledData[0] #remove noise
+    for key in labeledData.keys():
+        c = np.array(labeledData[key]['C']).astype(float)
+        b = np.array(labeledData[key]['B']).astype(float)
+        if len(c) > 0:
+            if len(b) > 0:
+                a = np.concatenate((c, b), axis=0)
+            else:
+                a = c
+        elif len(b) > 0:
+            a = n
+        else:
+            a = []
+        labeledData[key] = a
+    return labeledData
+
+labeledDataDBSCAN = formatDBSCAN(labeledDataDBSCAN)
+printResults(classifyLabels(labeledDataDBSCAN, D_PCA2, precisionWeight=1, recallWeight=2), "DBSCAN 2 Components")
