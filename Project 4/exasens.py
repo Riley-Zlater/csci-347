@@ -168,7 +168,7 @@ def recall(labeledData, origData, key, classLabel):
     return truePositives / (truePositives + falseNegatives)
 
 # Use precision and recall to determine each cluster's class
-def classifyLabels(labeledData, origData, precisionWeight=1, recallWeight=1):
+def classify(labeledData, origData, precisionWeight=1, recallWeight=1):
     labelsToClasses = {}
     # Calculate measurements for each class
     for key in labeledData.keys():
@@ -194,20 +194,7 @@ def classifyLabels(labeledData, origData, precisionWeight=1, recallWeight=1):
 
     return labelsToClasses
 
-def printResults(labelsToClasses, methodName):
-    print()
-    print(methodName)
-    for key in labelsToClasses.keys():
-        print()
-        print("Cluster #"+str(key))
-        classLabel = list(labelsToClasses[key].keys())[0]
-        print("Classification:", classLabel)
-        print("Precision", labelsToClasses[key][classLabel]["Precision"])
-        print("Recall", labelsToClasses[key][classLabel]["Recall"])
-
-printResults(classifyLabels(labeledDataKMeans, D_PCA2, precisionWeight=1, recallWeight=2), "K-Means 2 Components")
-
-# format DBSCAN
+# format DBSCAN to be used by the classifier
 def formatDBSCAN(labeledData):
     del labeledData[0] #remove noise
     for key in labeledData.keys():
@@ -225,5 +212,18 @@ def formatDBSCAN(labeledData):
         labeledData[key] = a
     return labeledData
 
-labeledDataDBSCAN = formatDBSCAN(labeledDataDBSCAN)
-printResults(classifyLabels(labeledDataDBSCAN, D_PCA2, precisionWeight=1, recallWeight=2), "DBSCAN 2 Components")
+# print the classifier output in a readable format
+def printResults(labelsToClasses, methodName):
+    print()
+    print(methodName)
+    for key in labelsToClasses.keys():
+        print()
+        print("Cluster #"+str(key))
+        classLabel = list(labelsToClasses[key].keys())[0]
+        print("Classification:", classLabel)
+        print("Precision", labelsToClasses[key][classLabel]["Precision"])
+        print("Recall", labelsToClasses[key][classLabel]["Recall"])
+
+printResults(classify(labeledDataKMeans, D_PCA2, precisionWeight=1, recallWeight=2), "K-Means 2 Components")
+
+printResults(classify(labeledDataDBSCAN, D_PCA2, precisionWeight=1, recallWeight=2), "DBSCAN 2 Components")
