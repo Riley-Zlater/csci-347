@@ -106,8 +106,8 @@ def drawKMEANS_2D(means, labeledData):
 
 
 # plot dbscan
-drawDBSCAN_2D(cl.dbscan(D_PCA2, .7, 9))
+drawDBSCAN_2D(cl.dbscan(D_PCA2, .145, 9))
 
 # plot kmeans
-means, labeledData = cl.kmeans(D_PCA2, 4, .01, 0)
+means, labeledData = cl.kmeans(D_PCA2, 4, .01)
 drawKMEANS_2D(means, labeledData)

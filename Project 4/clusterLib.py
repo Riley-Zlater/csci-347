@@ -27,7 +27,6 @@ def kmeans(data, k, eps, seed=0):
         converged = True
         for i in range(len(means)):
             delta = np.linalg.norm(means[i]-newMeans[i])
-            print(delta)
             if delta > eps:
                 converged = False
                 break
