@@ -39,10 +39,10 @@ def oneHotEncodeBinary(data, columnIndex):
 
 
 encodedColumns = oneHotEncodeBinary(D, 5)
-D = np.insert(D, 5, encodedColumns, axis=1)
-attNames = np.insert(attNames, 5, ['Female', 'Male'])
-D = np.delete(D, 7, axis=1)
-attNames = np.delete(attNames, 7)
+#D = np.insert(D, 5, encodedColumns, axis=1)
+#attNames = np.insert(attNames, 5, ['Female', 'Male'])
+D = np.delete(D, [5,6,7], axis=1)
+attNames = np.delete(attNames, [5,6,7])
 print("Encoded Data:\n", formattedData(D, attNames))
 
 # separate classifications
@@ -79,13 +79,8 @@ for ratio in pca2.explained_variance_ratio_:
 print("PCA to 2 components:\n", formattedData(D_PCA2))
 print("Explained variance ratio with 2 components:", explainedVarianceRatio)
 
-pca4 = PCA(n_components=4)
-D_PCA4 = pca4.fit_transform(D)
-explainedVarianceRatio = 0
-for ratio in pca4.explained_variance_ratio_:
-    explainedVarianceRatio += ratio
-print("PCA to 4 components:\n", formattedData(D_PCA4))
-print("Explained variance ratio with 4 components:", explainedVarianceRatio)
+print("All Exasens measurements:\n", formattedData(D, attributeNames=attNames[1:]))
+#print("Explained variance ratio with 4 components:", explainedVarianceRatio)
 
 # plot 2D clusters
 def drawDBSCAN_2D(labeledData):
@@ -220,16 +215,16 @@ def printResults(labelsToClasses, methodName):
 
 # plot dbscan
 labeledDataDBSCAN = cl.dbscan(D_PCA2, .145, 9)
-labeledDataDBSCAN4D = cl.dbscan(D_PCA4, .145, 9)
+labeledDataDBSCAN4D = cl.dbscan(D, .145, 9)
 drawDBSCAN_2D(labeledDataDBSCAN)
 
 # plot kmeans
 means, labeledDataKMeans = cl.kmeans(D_PCA2, 4, .01)
-_, labeledDataKMeans4D = cl.kmeans(D_PCA4, 4, .01)
+_, labeledDataKMeans4D = cl.kmeans(D, 4, .01)
 drawKMEANS_2D(means, labeledDataKMeans)
 labeledDataDBSCAN = formatDBSCAN(labeledDataDBSCAN)
 labeledDataDBSCAN4D = formatDBSCAN(labeledDataDBSCAN4D)
 printResults(classify(labeledDataKMeans, D_PCA2, precisionWeight=1, recallWeight=2), "K-Means 2 Components")
 printResults(classify(labeledDataDBSCAN, D_PCA2, precisionWeight=1, recallWeight=2), "DBSCAN 2 Components")
-printResults(classify(labeledDataKMeans4D, D_PCA4, precisionWeight=1, recallWeight=2), "K-Means 4 Components")
-printResults(classify(labeledDataDBSCAN4D, D_PCA4, precisionWeight=1, recallWeight=2), "DBSCAN 4 Components")
+printResults(classify(labeledDataKMeans4D, D, precisionWeight=1, recallWeight=2), "K-Means 4 Components")
+printResults(classify(labeledDataDBSCAN4D, D, precisionWeight=1, recallWeight=2), "DBSCAN 4 Components")
