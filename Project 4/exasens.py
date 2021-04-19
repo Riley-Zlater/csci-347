@@ -87,7 +87,7 @@ for ratio in pca4.explained_variance_ratio_:
 print("PCA to 4 components:\n", formattedData(D_PCA4))
 print("Explained variance ratio with 4 components:", explainedVarianceRatio)
 
-# Find and plot 2D clusters
+# plot 2D clusters
 def drawDBSCAN_2D(labeledData):
     if (len(labeledData[0]) > 0):
         plt.scatter(np.array(labeledData[0])[:, 0], np.array(labeledData[0])[:, 1], c='b', marker='.')
@@ -98,21 +98,12 @@ def drawDBSCAN_2D(labeledData):
         plt.scatter(np.array(labeledData[i]['B'])[:, 0], np.array(labeledData[i]['B'])[:, 1], color=cm.hot((i-1)/len(labeledData.keys())), marker='X')
     plt.show()
 
-
+# plot 2D clusters
 def drawKMEANS_2D(means, labeledData):
     plt.scatter(np.array(means)[:, 0], np.array(means)[:, 1], color='g', marker='X')
     for i in range(len(labeledData.keys())):
         plt.scatter(np.array(labeledData[i])[:, 0], np.array(labeledData[i])[:, 1], color=cm.hot(i/len(labeledData.keys())), marker='p')
     plt.show()
-
-
-# plot dbscan
-labeledDataDBSCAN = cl.dbscan(D_PCA2, .145, 9)
-#drawDBSCAN_2D(labeledDataDBSCAN)
-
-# plot kmeans
-means, labeledDataKMeans = cl.kmeans(D_PCA2, 4, .01)
-#drawKMEANS_2D(means, labeledDataKMeans)
 
 # Find precision of a cluster for a given class
 def precision(labeledData, origData, key, classLabel):
@@ -177,6 +168,7 @@ def classify(labeledData, origData, precisionWeight=1, recallWeight=1):
             labelsToClasses[key][classLabel] = {}
             labelsToClasses[key][classLabel]["Precision"] = precision(labeledData, origData, key, classLabel)
             labelsToClasses[key][classLabel]["Recall"] = recall(labeledData, origData, key, classLabel)
+            labelsToClasses[key][classLabel]["Size"] = len(labeledData[key])
 
     # Select classes with best representation within each cluster
     for key in labelsToClasses.keys():
@@ -223,7 +215,21 @@ def printResults(labelsToClasses, methodName):
         print("Classification:", classLabel)
         print("Precision", labelsToClasses[key][classLabel]["Precision"])
         print("Recall", labelsToClasses[key][classLabel]["Recall"])
+        print("Size", labelsToClasses[key][classLabel]["Size"])
 
+
+# plot dbscan
+labeledDataDBSCAN = cl.dbscan(D_PCA2, .145, 9)
+labeledDataDBSCAN4D = cl.dbscan(D_PCA4, .145, 9)
+drawDBSCAN_2D(labeledDataDBSCAN)
+
+# plot kmeans
+means, labeledDataKMeans = cl.kmeans(D_PCA2, 4, .01)
+_, labeledDataKMeans4D = cl.kmeans(D_PCA4, 4, .01)
+drawKMEANS_2D(means, labeledDataKMeans)
+labeledDataDBSCAN = formatDBSCAN(labeledDataDBSCAN)
+labeledDataDBSCAN4D = formatDBSCAN(labeledDataDBSCAN4D)
 printResults(classify(labeledDataKMeans, D_PCA2, precisionWeight=1, recallWeight=2), "K-Means 2 Components")
-
 printResults(classify(labeledDataDBSCAN, D_PCA2, precisionWeight=1, recallWeight=2), "DBSCAN 2 Components")
+printResults(classify(labeledDataKMeans4D, D_PCA4, precisionWeight=1, recallWeight=2), "K-Means 4 Components")
+printResults(classify(labeledDataDBSCAN4D, D_PCA4, precisionWeight=1, recallWeight=2), "DBSCAN 4 Components")
