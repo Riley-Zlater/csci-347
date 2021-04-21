@@ -208,15 +208,15 @@ def printResults(labelsToClasses, methodName):
         print("Cluster #"+str(key))
         classLabel = list(labelsToClasses[key].keys())[0]
         print("Classification:", classLabel)
-        print("Precision", labelsToClasses[key][classLabel]["Precision"])
-        print("Recall", labelsToClasses[key][classLabel]["Recall"])
-        print("Size", labelsToClasses[key][classLabel]["Size"])
+        print("     Precision:", labelsToClasses[key][classLabel]["Precision"])
+        print("        Recall:", labelsToClasses[key][classLabel]["Recall"])
+        print("          Size:", labelsToClasses[key][classLabel]["Size"])
 
 
 # plot dbscan
-labeledDataDBSCAN = cl.dbscan(D_PCA2, .145, 9)
-labeledDataDBSCAN4D = cl.dbscan(D, .145, 9)
+labeledDataDBSCAN = cl.dbscan(D_PCA2, .025, 4)
 drawDBSCAN_2D(labeledDataDBSCAN)
+labeledDataDBSCAN4D = cl.dbscan(D, .025, 4)
 
 # plot kmeans
 means, labeledDataKMeans = cl.kmeans(D_PCA2, 4, .01)
@@ -224,6 +224,23 @@ _, labeledDataKMeans4D = cl.kmeans(D, 4, .01)
 drawKMEANS_2D(means, labeledDataKMeans)
 labeledDataDBSCAN = formatDBSCAN(labeledDataDBSCAN)
 labeledDataDBSCAN4D = formatDBSCAN(labeledDataDBSCAN4D)
+
+# plot actual data
+labeledDataExact = {
+    0: [],
+    1: [],
+    2: [],
+    3: [],
+}
+for idx in range(len(D_PCA2)):
+    for i in range(len(classLabels)):
+        if classLabels[i] == classes[idx]:
+            labeledDataExact[i].append(D_PCA2[idx])
+print(labeledDataExact)
+for i in range(len(labeledDataExact.keys())):
+    plt.scatter(np.array(labeledDataExact[i])[:, 0], np.array(labeledDataExact[i])[:, 1], color=cm.hot(i/len(labeledDataExact.keys())), marker='p')
+plt.show()
+
 printResults(classify(labeledDataKMeans, D_PCA2, precisionWeight=1, recallWeight=2), "K-Means 2 Components")
 printResults(classify(labeledDataDBSCAN, D_PCA2, precisionWeight=1, recallWeight=2), "DBSCAN 2 Components")
 printResults(classify(labeledDataKMeans4D, D, precisionWeight=1, recallWeight=2), "K-Means 4 Components")
